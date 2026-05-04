@@ -1,189 +1,181 @@
 from flask import Flask, render_template, request, jsonify
+
 import folium
+from folium import plugins
 import pandas as pd
 import sqlalchemy
 import heapq
 import os
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
-# Fetch the database URL from the server environment, or use localhost as a fallback for local testing
+# Database Configuration
 DB_URI = os.getenv("DATABASE_URL", "postgresql://postgres:admin123@localhost:5432/india_aviation")
-
-# SQLAlchemy requires 'postgresql://' but some cloud providers give 'postgres://'
 if DB_URI.startswith("postgres://"):
     DB_URI = DB_URI.replace("postgres://", "postgresql://", 1)
 
-# -------------------------------------------------------------------
-# DATABASE CONNECTION
-# -------------------------------------------------------------------
 engine = sqlalchemy.create_engine(DB_URI)
 
 def get_airports_from_db():
-    """Fetches mainline airport nodes (excluding small_airports)."""
-    query = """
-        SELECT ident, name, latitude_deg, longitude_deg, iso_region, type 
-        FROM airports
-        WHERE type != 'small_airport';
+    # Fetching airport metadata for the map markers
+    query = "SELECT ident, name, latitude_deg, longitude_deg, type FROM airports WHERE type != 'small_airport';"
+    return pd.read_sql(query, engine).to_dict(orient='records')
+
+def get_detailed_itinerary(start_node, end_node, start_time_str="16:00"):
     """
-    df = pd.read_sql(query, engine)
-    return df.to_dict(orient='records')
-
-def get_economic_dijkstra_path(start_node, end_node):
-    """The Core Pathfinding Algorithm."""
-    query = "SELECT source_id, target_id, cost_inr, distance_km FROM edges_economic"
+    Temporal Dijkstra adapted from your IPYNB logic.
+    Handles multi-day connections and buffer times.
+    """
+    base_date = datetime(2026, 5, 4) 
     try:
-        edges_df = pd.read_sql(query, engine)
+        start_time = datetime.combine(base_date, datetime.strptime(start_time_str, "%H:%M").time())
+    except:
+        start_time = datetime(2026, 5, 4, 16, 0)
+
+    # Load flight schedule
+    try:
+        query = "SELECT source_id, target_id, departure_time, arrival_time, cost_inr, distance_km FROM flights"
+        all_flights = pd.read_sql(query, engine)
     except Exception as e:
-        return float("inf"), 0, []
+        print(f"Database Error: {e}")
+        return None
 
-    graph = {}
-    for _, row in edges_df.iterrows():
-        u, v, w = row['source_id'], row['target_id'], row['cost_inr']
-        dist = row['distance_km']
-        
-        if u not in graph: graph[u] = []
-        if v not in graph: graph[v] = []
-        
-        graph[u].append((v, w, dist))
-        graph[v].append((u, w, dist)) 
-
-    queue = [(0, 0, start_node, [])]
-    seen = set()
-    min_costs = {start_node: 0}
+    # Priority Queue: (current_time, cost, current_node, itinerary_list, total_dist)
+    queue = [(start_time, 0, start_node, [], 0)]
+    earliest_arrival = {} 
 
     while queue:
-        (cost, total_dist, v1, path) = heapq.heappop(queue)
-        
-        if v1 not in seen:
-            seen.add(v1)
-            path = path + [v1]
+        curr_time, cost, u, itinerary, dist = heapq.heappop(queue)
+
+        if u == end_node:
+            return cost, curr_time, itinerary, dist
+
+        if u in earliest_arrival and earliest_arrival[u] <= curr_time:
+            continue
+        earliest_arrival[u] = curr_time
+
+        # Prevent infinite searching (3-day cap)
+        if (curr_time - start_time).days > 3:
+            continue
+
+        available_flights = all_flights[all_flights['source_id'] == u]
+
+        for _, f in available_flights.iterrows():
+            buffer_time = timedelta(minutes=45)
             
-            if v1 == end_node:
-                return cost, total_dist, path
+            # Convert time objects from DB to full datetimes on the current 'simulation' day
+            f_dep = datetime.combine(curr_time.date(), f['departure_time'])
+            f_arr = datetime.combine(curr_time.date(), f['arrival_time'])
+            
+            # Handle overnight flights
+            if f_arr < f_dep: 
+                f_arr += timedelta(days=1)
 
-            for v2, weight, edge_dist in graph.get(v1, []):
-                if v2 in seen: continue
-                
-                prev_cost = min_costs.get(v2, None)
-                next_cost = cost + weight
-                
-                if prev_cost is None or next_cost < prev_cost:
-                    min_costs[v2] = next_cost
-                    heapq.heappush(queue, (next_cost, total_dist + edge_dist, v2, path))
+            # Determine if we need to wait for the next day's flight
+            if f_dep < curr_time + buffer_time:
+                f_dep += timedelta(days=1)
+                f_arr += timedelta(days=1)
+            
+            layover_duration = (f_dep - curr_time)
+            
+            # Create the segment for the frontend
+            new_leg = {
+                'from': u,
+                'to': f['target_id'],
+                'dep': f_dep.strftime('%b %d, %I:%M %p'),
+                'arr': f_arr.strftime('%b %d, %I:%M %p'),
+                'fare': float(f['cost_inr']),
+                'layover': str(layover_duration) if itinerary else "0:00:00"
+            }
 
-    return float("inf"), 0, []
+            heapq.heappush(queue, (
+                f_arr, 
+                cost + f['cost_inr'], 
+                f['target_id'], 
+                itinerary + [new_leg], 
+                dist + f['distance_km']
+            ))
+
+    return None
 
 def create_base_map(path_coords=None, path_nodes=None):
-    """Generates Map. Automatically grays out and shrinks non-path nodes if a path exists."""
     m = folium.Map(location=[20.5937, 78.9629], zoom_start=5, tiles="CartoDB positron")
     airports = get_airports_from_db()
     
-    if path_nodes is None:
-        path_nodes = []
-    
+    path_nodes = path_nodes or []
     has_active_path = len(path_nodes) > 0
 
     for ap in airports:
         is_in_path = ap['ident'] in path_nodes
         
-        # --- UI Dynamic Marker Logic ---
         if has_active_path and not is_in_path:
-            # Grayed out & further shrunken when a route is active
-            marker_color = '#bdc3c7' # Gray
-            marker_radius = 3
-            marker_opacity = 0.4
+            color, radius, opacity = '#bdc3c7', 3, 0.4
         elif is_in_path:
-            # Highlighted route nodes
-            marker_color = '#e74c3c' # Red
-            marker_radius = 8
-            marker_opacity = 1.0
+            color = '#27ae60' if ap['ident'] == path_nodes[0] else '#e74c3c'
+            radius, opacity = 7, 1.0
         else:
-            # Default state (smaller than standard markers)
-            marker_color = '#2980b9' # Blue
-            marker_radius = 5
-            marker_opacity = 0.8
+            color, radius, opacity = '#2980b9', 5, 0.7
 
-        html = f"""
-            <div style="font-family: Arial; text-align: center;">
-                <h4 style="margin: 5px 0; color: #2c3e50;">{ap['name']} ({ap['ident']})</h4>
-                <p style="margin: 2px 0; font-size: 12px; color: #7f8c8d;">Region: {ap['iso_region']}</p>
-                <button style="margin: 3px; padding: 5px 10px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 3px;" 
-                        onclick="window.top.postMessage({{action: 'setPoint', id: '{ap['ident']}', type: 'source'}}, '*')">Set Source</button>
-                <button style="margin: 3px; padding: 5px 10px; cursor: pointer; background: #2980b9; color: white; border: none; border-radius: 3px;" 
-                        onclick="window.top.postMessage({{action: 'setPoint', id: '{ap['ident']}', type: 'dest'}}, '*')">Set Dest</button>
+        popup_html = f"""
+            <div style="font-family: sans-serif; text-align: center;">
+                <strong>{ap['name']}</strong><br>
+                <button onclick="window.top.postMessage({{action: 'setPoint', id: '{ap['ident']}', type: 'source'}}, '*')">Start</button>
+                <button onclick="window.top.postMessage({{action: 'setPoint', id: '{ap['ident']}', type: 'dest'}}, '*')">End</button>
             </div>
         """
-        iframe = folium.IFrame(html, width=220, height=120)
-        popup = folium.Popup(iframe)
         
-        # Using CircleMarker for size & color control
         folium.CircleMarker(
             location=[ap['latitude_deg'], ap['longitude_deg']], 
-            radius=marker_radius,
-            color=marker_color,
-            fill=True,
-            fill_color=marker_color,
-            fill_opacity=marker_opacity,
-            popup=popup, 
-            tooltip=f"{ap['name']} ({ap['ident']})"
+            radius=radius, color=color, fill=True, fill_opacity=opacity,
+            popup=folium.Popup(popup_html, max_width=200),
+            tooltip=ap['ident']
         ).add_to(m)
 
-    # Draw the path
     if path_coords:
-        folium.PolyLine(
-            path_coords, weight=4, color='#e74c3c', opacity=0.8, dash_array='10'
-        ).add_to(m)
+        plugins.AntPath(path_coords, color='#2c3e50', weight=4).add_to(m)
         
     return m._repr_html_()
 
 @app.route('/')
 def index():
-    try:
-        return render_template('index.html', map_html=create_base_map())
-    except Exception as e:
-        return f"Database Error: {str(e)}"
+    return render_template('index.html', map_html=create_base_map())
 
-@app.route('/reset', methods=['GET'])
-def reset_map():
-    # Returns a fresh, unstyled map
+@app.route('/reset')
+def reset():
     return jsonify({"map_html": create_base_map()})
 
-@app.route('/query', methods=['POST'])
+@app.route('/query', methods=['POST'], strict_slashes=False)
 def run_query():
     data = request.json
-    source_id = data.get('source')
-    dest_id = data.get('dest')
+    source = data.get('source')
+    dest = data.get('dest')
+    user_start_time = data.get('start_time',"16:00")
     
-    if not source_id or not dest_id:
-        return jsonify({"error": "Select both source and destination!"}), 400
-    if source_id == dest_id:
-        return jsonify({"error": "Source and destination cannot be the same."}), 400
-
-    # 1. Run Dijkstra Algorithm
-    fare, dist, route_nodes = get_economic_dijkstra_path(source_id, dest_id)
+    result = get_detailed_itinerary(source, dest, start_time_str=user_start_time)
     
-    if not route_nodes:
-        return jsonify({"error": "No valid economic path found between these nodes."}), 404
+    if not result:
+        return jsonify({"error": "No viable flight path found."}), 200
 
-    # 2. Extract coordinates for the returned path nodes
-    airports = get_airports_from_db()
+    total_cost, final_time, legs, total_km = result
+
+    # Prepare coordinates for the map path
+    airports_list = get_airports_from_db()
+    route_nodes = [source] + [leg['to'] for leg in legs]
     path_coords = []
-    for node_id in route_nodes:
-        node_data = next((ap for ap in airports if ap['ident'] == node_id), None)
+    for node in route_nodes:
+        node_data = next((ap for ap in airports_list if ap['ident'] == node), None)
         if node_data:
             path_coords.append([node_data['latitude_deg'], node_data['longitude_deg']])
 
-    # 3. Generate updated map
-    new_map_html = create_base_map(path_coords=path_coords, path_nodes=route_nodes)
-    
     return jsonify({
-        "message": "Path Computed!",
-        "map_html": new_map_html,
-        "fare": round(fare, 2),
-        "distance": round(dist, 2),
-        "route_str": " ➔ ".join(route_nodes)
+        "message": "Itinerary Found!",
+        "map_html": create_base_map(path_coords=path_coords, path_nodes=route_nodes),
+        "fare": round(total_cost, 2),
+        "distance": round(total_km, 2),
+        "route_str": " ➔ ".join(route_nodes),
+        "itinerary": legs  # This matches your index.html expectations
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)

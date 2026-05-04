@@ -1,0 +1,115 @@
+from flask import Flask, render_template, request, jsonify
+import folium
+import pandas as pd
+from sqlalchemy import create_engine
+
+app = Flask(__name__)
+
+# -------------------------------------------------------------------
+# DATABASE CONNECTION SETUP
+# Format: postgresql://username:password@host:port/database_name
+# -------------------------------------------------------------------
+DB_URI = 'postgresql://postgres:admin123@localhost:5432/india_aviation'
+engine = create_engine(DB_URI)
+
+def get_airports_from_db():
+    """Fetches all airport nodes from the Postgres database."""
+    query = """
+        SELECT ident, name, latitude_deg, longitude_deg, iso_region 
+        FROM airports;
+    """
+    # Read the SQL query directly into a Pandas DataFrame, then convert to a list of dictionaries
+    df = pd.read_sql(query, engine)
+    return df.to_dict(orient='records')
+
+def create_base_map(path_coords=None):
+    """Generates the Folium map using live Postgres data."""
+    # Center the map on India
+    m = folium.Map(location=[20.5937, 78.9629], zoom_start=5, tiles="CartoDB positron")
+    
+    # Fetch live data
+    airports = get_airports_from_db()
+    
+    for ap in airports:
+        # Create HTML buttons for the popup. 
+        html = f"""
+            <div style="font-family: Arial; text-align: center;">
+                <h4 style="margin: 5px 0; color: #2c3e50;">{ap['name']} ({ap['ident']})</h4>
+                <p style="margin: 2px 0; font-size: 12px; color: #7f8c8d;">Region: {ap['iso_region']}</p>
+                <button style="margin: 3px; padding: 5px 10px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 3px;" 
+                        onclick="window.top.postMessage({{action: 'setPoint', id: '{ap['ident']}', type: 'source'}}, '*')">Set Source</button>
+                <button style="margin: 3px; padding: 5px 10px; cursor: pointer; background: #2980b9; color: white; border: none; border-radius: 3px;" 
+                        onclick="window.top.postMessage({{action: 'setPoint', id: '{ap['ident']}', type: 'dest'}}, '*')">Set Dest</button>
+            </div>
+        """
+        iframe = folium.IFrame(html, width=220, height=120)
+        popup = folium.Popup(iframe)
+        
+        # Add the marker to the map (Note: updated keys to match DB column names)
+        folium.Marker(
+            [ap['latitude_deg'], ap['longitude_deg']], 
+            popup=popup, 
+            tooltip=ap['name'],
+            icon=folium.Icon(color='blue', icon='plane', prefix='fa')
+        ).add_to(m)
+
+    # If the algorithm found a path, draw it!
+    if path_coords:
+        folium.PolyLine(
+            path_coords,
+            weight=4,
+            color='red',
+            opacity=0.8,
+            dash_array='10' # Creates a dashed flight line
+        ).add_to(m)
+        
+    return m._repr_html_()
+
+@app.route('/')
+def index():
+    # Render the initial map with database nodes
+    try:
+        map_html = create_base_map()
+        return render_template('index.html', map_html=map_html)
+    except Exception as e:
+        return f"Database Connection Error: {str(e)}"
+
+@app.route('/query', methods=['POST'])
+def run_query():
+    data = request.json
+    source_id = data.get('source')
+    dest_id = data.get('dest')
+    
+    # 1. Error Checking
+    if not source_id or not dest_id:
+        return jsonify({"error": "Please select both a source and destination from the map markers!"}), 400
+    if source_id == dest_id:
+        return jsonify({"error": "Source and destination cannot be the same airport."}), 400
+
+    # 2. Node Retrieval (Fetching specific nodes from DB to get their coordinates)
+    airports = get_airports_from_db()
+    source_node = next((ap for ap in airports if ap['ident'] == source_id), None)
+    dest_node = next((ap for ap in airports if ap['ident'] == dest_id), None)
+
+    if not source_node or not dest_node:
+        return jsonify({"error": "Invalid airport selected."}), 400
+
+    # 3. MOCK ALGORITHM LAYER 
+    # --> REPLACE THIS WITH YOUR ACTUAL DIJKSTRA FUNCTION <--
+    # In your final thesis, this is where you will query the `edges_economic` table
+    # to calculate the shortest path. For now, we simulate a direct line.
+    path_coords = [
+        [source_node['latitude_deg'], source_node['longitude_deg']],
+        [dest_node['latitude_deg'], dest_node['longitude_deg']]
+    ]
+    
+    # 4. Generate a fresh map with the flight path drawn on it
+    new_map_html = create_base_map(path_coords=path_coords)
+    
+    return jsonify({
+        "message": f"Success! Path calculated from {source_node['name']} to {dest_node['name']}.",
+        "map_html": new_map_html
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True)

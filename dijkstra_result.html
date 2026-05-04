@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_935f5b652e30a138f92e85a3d2501b26 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_935f5b652e30a138f92e85a3d2501b26" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_935f5b652e30a138f92e85a3d2501b26 = L.map(
+                "map_935f5b652e30a138f92e85a3d2501b26",
+                {
+                    center: [20.5937, 78.9629],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4c0568f55a92f1522c105341a7814c41 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_4c0568f55a92f1522c105341a7814c41.addTo(map_935f5b652e30a138f92e85a3d2501b26);
+        
+    
+            var marker_436db50b180111800841de14c2fdb648 = L.marker(
+                [11.640194, 92.72902],
+                {
+}
+            ).addTo(map_935f5b652e30a138f92e85a3d2501b26);
+        
+    
+            var icon_cb4e47116bad2301d5dfdb0d6df53c2b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_436db50b180111800841de14c2fdb648.setIcon(icon_cb4e47116bad2301d5dfdb0d6df53c2b);
+        
+    
+        var popup_ae9b0bbe8bd65f0c01d85f79cb893cc2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_777f129cd19c98e5a8de9df3fc51a666 = $(`<div id="html_777f129cd19c98e5a8de9df3fc51a666" style="width: 100.0%; height: 100.0%;">Veer Savarkar International Airport / INS Utkrosh (VOPB)</div>`)[0];
+                popup_ae9b0bbe8bd65f0c01d85f79cb893cc2.setContent(html_777f129cd19c98e5a8de9df3fc51a666);
+            
+        
+
+        marker_436db50b180111800841de14c2fdb648.bindPopup(popup_ae9b0bbe8bd65f0c01d85f79cb893cc2)
+        ;
+
+        
+    
+    
+            var marker_78262152ed85d91a6638c70576f28cfc = L.marker(
+                [26.7397003174, 83.4496994019],
+                {
+}
+            ).addTo(map_935f5b652e30a138f92e85a3d2501b26);
+        
+    
+            var icon_cd1d5a6e4f9f3100b102420365c17526 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_78262152ed85d91a6638c70576f28cfc.setIcon(icon_cd1d5a6e4f9f3100b102420365c17526);
+        
+    
+        var popup_030032f220c6575625c7cf6833a9a929 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dd3af4d6472e131395a1cfcedca138af = $(`<div id="html_dd3af4d6472e131395a1cfcedca138af" style="width: 100.0%; height: 100.0%;">Gorakhpur Airport (VEGK)</div>`)[0];
+                popup_030032f220c6575625c7cf6833a9a929.setContent(html_dd3af4d6472e131395a1cfcedca138af);
+            
+        
+
+        marker_78262152ed85d91a6638c70576f28cfc.bindPopup(popup_030032f220c6575625c7cf6833a9a929)
+        ;
+
+        
+    
+    
+            var marker_eb62d390dbd803ce23af969f9c6ffa6e = L.marker(
+                [34.135899, 77.546501],
+                {
+}
+            ).addTo(map_935f5b652e30a138f92e85a3d2501b26);
+        
+    
+            var icon_0c13b6218c655d87e0dd49f17f6d8209 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_eb62d390dbd803ce23af969f9c6ffa6e.setIcon(icon_0c13b6218c655d87e0dd49f17f6d8209);
+        
+    
+        var popup_4a9fb28cabf23450e91e94459e2dea94 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eb59769fd63a0d82dca15df84d09768b = $(`<div id="html_eb59769fd63a0d82dca15df84d09768b" style="width: 100.0%; height: 100.0%;">Leh Kushok Bakula Rimpochee Airport (VILH)</div>`)[0];
+                popup_4a9fb28cabf23450e91e94459e2dea94.setContent(html_eb59769fd63a0d82dca15df84d09768b);
+            
+        
+
+        marker_eb62d390dbd803ce23af969f9c6ffa6e.bindPopup(popup_4a9fb28cabf23450e91e94459e2dea94)
+        ;
+
+        
+    
+    
+            var poly_line_21fe6c086a2e3451d81d6b755f14770d = L.polyline(
+                [[11.640194, 92.72902], [26.7397003174, 83.4496994019], [34.135899, 77.546501]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_935f5b652e30a138f92e85a3d2501b26);
+        
+    
+            poly_line_21fe6c086a2e3451d81d6b755f14770d.bindTooltip(
+                `<div>
+                     Shortest Path: 2937.14 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

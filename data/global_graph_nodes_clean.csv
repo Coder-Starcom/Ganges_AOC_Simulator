@@ -1,0 +1,151 @@
+airport_code,name,city,country,latitude,longitude,network_tier
+YUL,Montreal / Pierre Elliott Trudeau International Airport,Montréal,CA,45.467837,-73.742294,Premium Global Hub
+YVR,Vancouver International Airport,Vancouver,CA,49.193901,-123.183998,Premium Global Hub
+YYC,Calgary International Airport,Calgary,CA,51.118822,-114.009933,Premium Global Hub
+YYZ,Toronto Pearson International Airport,Toronto,CA,43.675935,-79.629421,Premium Global Hub
+LOS,Murtala Muhammed International Airport,Lagos,NG,6.57737,3.32116,Premium Global Hub
+TUN,Tunis Carthage International Airport,Tunis,TN,36.851002,10.2272,Premium Global Hub
+BRU,Brussels Airport,Zaventem,BE,50.901402,4.48444,Premium Global Hub
+BER,Berlin Brandenburg Airport,Berlin,DE,52.361738,13.502341,Premium Global Hub
+FRA,Frankfurt Main Airport,Frankfurt am Main,DE,50.026706,8.55835,Premium Global Hub
+HAM,Hamburg Helmut Schmidt Airport,Hamburg,DE,53.630402,9.98823,Premium Global Hub
+DUS,Düsseldorf Airport,Düsseldorf,DE,51.289501,6.76678,Premium Global Hub
+MUC,Munich Airport,Munich,DE,48.353802,11.7861,Premium Global Hub
+HEL,Helsinki Vantaa Airport,Helsinki (Vantaa),FI,60.318363,24.963341,Premium Global Hub
+MAN,Manchester Airport,"Manchester, Greater Manchester",GB,53.349375,-2.279521,Premium Global Hub
+LGW,London Gatwick Airport,London,GB,51.148744,-0.185739,Premium Global Hub
+LHR,London Heathrow Airport,London,GB,51.470748,-0.459909,Premium Global Hub
+STN,London Stansted Airport,"London, Essex",GB,51.884998,0.235,Premium Global Hub
+AMS,Amsterdam Airport Schiphol,Amsterdam,NL,52.308601,4.76389,Premium Global Hub
+DUB,Dublin Airport,Dublin,IE,53.428713,-6.262121,Premium Global Hub
+CPH,Copenhagen Kastrup Airport,Copenhagen,DK,55.617900848389,12.656000137329,Premium Global Hub
+OSL,Oslo-Gardermoen International Airport,Oslo (Gardermoen),NO,60.193901,11.1004,Premium Global Hub
+GDN,Gdańsk Lech Wałęsa Airport,Gdańsk,PL,54.377602,18.4662,Premium Global Hub
+KRK,Kraków John Paul II International Airport,Balice,PL,50.077702,19.7848,Premium Global Hub
+WAW,Warsaw Chopin Airport,Warsaw,PL,52.165699,20.9671,Premium Global Hub
+ARN,Stockholm-Arlanda Airport,Stockholm,SE,59.64849,17.928829,Premium Global Hub
+CPT,Cape Town International Airport,Cape Town,ZA,-33.97403,18.604333,Premium Global Hub
+JNB,O.R. Tambo International Airport,Johannesburg,ZA,-26.140081,28.246801,Premium Global Hub
+CAI,Cairo International Airport,Cairo,EG,30.111534,31.396694,Premium Global Hub
+NBO,Jomo Kenyatta International Airport,Nairobi,KE,-1.318886,36.928233,Premium Global Hub
+ATL,Hartsfield Jackson Atlanta International Airport,Atlanta,US,33.6367,-84.428101,Premium Global Hub
+BOS,Boston Logan International Airport,Boston,US,42.36197,-71.0079,Premium Global Hub
+DEN,Denver International Airport,Denver,US,39.860027,-104.673792,Premium Global Hub
+DFW,Dallas Fort Worth International Airport,Dallas-Fort Worth,US,32.896801,-97.038002,Premium Global Hub
+DTW,Detroit Metropolitan Wayne County Airport,Detroit,US,42.21377,-83.353786,Premium Global Hub
+EWR,Newark Liberty International Airport,Newark,US,40.6894,-74.170545,Premium Global Hub
+IAD,Washington Dulles International Airport,Dulles,US,38.9445,-77.455803,Premium Global Hub
+IAH,George Bush Intercontinental Airport,Houston,US,29.9844,-95.3414,Premium Global Hub
+JFK,John F. Kennedy International Airport,New York,US,40.639447,-73.779317,Premium Global Hub
+LAX,Los Angeles International Airport,Los Angeles,US,33.942501,-118.407997,Premium Global Hub
+LGA,LaGuardia Airport,New York,US,40.777199,-73.872597,Premium Global Hub
+MCO,Orlando International Airport,Orlando,US,28.429399490356445,-81.30899810791016,Premium Global Hub
+MIA,Miami International Airport,Miami,US,25.796011,-80.289751,Premium Global Hub
+MSP,Minneapolis–Saint Paul International Airport / Wold–Chamberlain Field,Minneapolis,US,44.880081,-93.221741,Premium Global Hub
+ORD,Chicago O'Hare International Airport,Chicago,US,41.9786,-87.9048,Premium Global Hub
+PHX,Phoenix Sky Harbor International Airport,Phoenix,US,33.435302,-112.005905,Premium Global Hub
+SAN,San Diego International Airport,San Diego,US,32.733601,-117.190002,Premium Global Hub
+SEA,Seattle–Tacoma International Airport,Seattle,US,47.447943,-122.310276,Premium Global Hub
+SFO,San Francisco International Airport,San Francisco,US,37.619806,-122.374821,Premium Global Hub
+BCN,Josep Tarradellas Barcelona-El Prat Airport,Barcelona,ES,41.2971,2.07846,Premium Global Hub
+MAD,Adolfo Suárez Madrid–Barajas Airport,Madrid,ES,40.493407,-3.572249,Premium Global Hub
+AGP,Málaga-Costa del Sol Airport,Málaga,ES,36.6749,-4.49911,Premium Global Hub
+LYS,Lyon Saint-Exupéry Airport,"Colombier-Saugnieu, Rhône",FR,45.725996,5.090139,Premium Global Hub
+MRS,Marseille Provence Airport,"Marignane, Bouches-du-Rhône",FR,43.438088,5.2125,Premium Global Hub
+NCE,Nice-Côte d'Azur Airport,"Nice, Alpes-Maritimes",FR,43.658401,7.21587,Premium Global Hub
+CDG,Charles de Gaulle International Airport,"Paris (Roissy-en-France, Val-d'Oise)",FR,49.00896,2.554117,Premium Global Hub
+ORY,Paris-Orly Airport,"Paris (Orly, Val-de-Marne)",FR,48.729499,2.358963,Premium Global Hub
+ATH,Athens Eleftherios Venizelos International Airport,Spata-Artemida,GR,37.936401,23.9445,Premium Global Hub
+BUD,Budapest Liszt Ferenc International Airport,Budapest,HU,47.43018,19.262393,Premium Global Hub
+MXP,Milan Malpensa International Airport,Ferno (VA),IT,45.6306,8.72811,Premium Global Hub
+FCO,Rome–Fiumicino Leonardo da Vinci International Airport,Rome,IT,41.804532,12.251998,Premium Global Hub
+PRG,Václav Havel Airport Prague,Prague,CZ,50.100874,14.259911,Premium Global Hub
+VIE,Vienna International Airport,Vienna,AT,48.110298,16.5697,Premium Global Hub
+OPO,Francisco de Sá Carneiro Airport,Porto,PT,41.2481002808,-8.68138980865,Premium Global Hub
+LIS,Lisbon Humberto Delgado Airport,Lisbon,PT,38.7813,-9.13592,Premium Global Hub
+GVA,Geneva International Airport,Geneva,CH,46.238098,6.10895,Premium Global Hub
+ZRH,Zürich Airport,Zurich,CH,47.458056,8.548056,Premium Global Hub
+MEX,Mexico City Benito Juárez International Airport,Mexico City,MX,19.435822,-99.07033,Premium Global Hub
+CUN,Cancún International Airport,Cancún,MX,21.040817,-86.87347,Premium Global Hub
+PTY,Tocumen International Airport,Tocumen,PA,9.07136,-79.383499,Premium Global Hub
+KBL,Kabul International Airport,Kabul,AF,34.565899,69.212303,Premium Global Hub
+BAH,Bahrain International Airport,Manama,BH,26.267295,50.63764,Premium Global Hub
+JED,King Abdulaziz International Airport,Jeddah,SA,21.680241,39.157436,Premium Global Hub
+MED,Prince Mohammad Bin Abdulaziz Airport,Medina,SA,24.5534,39.705101,Premium Global Hub
+RUH,King Khalid International Airport,Riyadh,SA,24.9576,46.698799,Premium Global Hub
+AMM,Queen Alia International Airport,Amman,JO,31.7226009369,35.9931983948,Premium Global Hub
+KWI,Kuwait International Airport,Kuwait City,KW,29.224487,47.969813,Premium Global Hub
+BEY,Beirut Rafic Hariri International Airport,Beirut,LB,33.819833,35.487443,Premium Global Hub
+AUH,Zayed International Airport,Abu Dhabi,AE,24.440966,54.649237,Premium Global Hub
+DXB,Dubai International Airport,Dubai,AE,25.24979,55.370992,Premium Global Hub
+DWC,Al Maktoum International Airport,Dubai(Jebel Ali),AE,24.896171,55.16235,Premium Global Hub
+MCT,Muscat International Airport,Muscat/Seeb,OM,23.600218,58.285268,Premium Global Hub
+ISB,Islamabad International Airport,Attock,PK,33.549,72.82566,Premium Global Hub
+KHI,Jinnah International Airport,Karachi,PK,24.9065,67.160797,Premium Global Hub
+LHE,Allama Iqbal International Airport,Lahore,PK,31.521601,74.403603,Premium Global Hub
+PEW,Bacha Khan International Airport,Peshawar,PK,33.9939,71.514603,Premium Global Hub
+DOH,Hamad International Airport,Doha,QA,25.273056,51.608056,Premium Global Hub
+TPE,Taiwan Taoyuan International Airport,Taoyuan,TW,25.0777,121.233002,Premium Global Hub
+NRT,Narita International Airport,Narita,JP,35.76858,140.388714,Premium Global Hub
+KIX,Kansai International Airport,Osaka,JP,34.427299,135.244003,Premium Global Hub
+HND,Tokyo Haneda International Airport,Tokyo,JP,35.549678,139.786958,Premium Global Hub
+PUS,Gimhae International Airport,Busan,KR,35.179501,128.938004,Premium Global Hub
+ICN,Incheon International Airport,Seoul,KR,37.469101,126.450996,Premium Global Hub
+GMP,Gimpo International Airport,Seoul,KR,37.5583,126.791,Premium Global Hub
+MNL,Ninoy Aquino International Airport,Manila (Pasay),PH,14.5086,121.019997,Premium Global Hub
+AMD,Sardar Vallabh Patel International Airport,Ahmedabad,IN,23.0772,72.634697,Domestic Stronghold (IN)
+BOM,Chhatrapati Shivaji Maharaj International Airport,Mumbai,IN,19.088699,72.867897,Domestic Stronghold (IN)
+BDQ,Vadodara International Airport,Vadodara,IN,22.336201,73.226303,Domestic Stronghold (IN)
+BHO,Raja Bhoj International Airport,Bhopal,IN,23.2875,77.337402,Domestic Stronghold (IN)
+HSR,Rajkot International Airport,Rajkot,IN,22.378824,71.039391,Domestic Stronghold (IN)
+IDR,Devi Ahilya Bai Holkar International Airport,Indore,IN,22.721404,75.80051,Domestic Stronghold (IN)
+NAG,Dr. Babasaheb Ambedkar International Airport,Nagpur,IN,21.092199,79.047203,Domestic Stronghold (IN)
+ISK,Nashik International Airport,Nashik,IN,20.119101,73.912903,Domestic Stronghold (IN)
+PNQ,Pune International Airport,Pune,IN,18.5821,73.919701,Domestic Stronghold (IN)
+RPR,Swami Vivekananda Airport,Raipur,IN,21.180401,81.7388,Domestic Stronghold (IN)
+SAG,Shirdi International Airport,Kakadi,IN,19.689211,74.373655,Domestic Stronghold (IN)
+STV,Surat International Airport,Surat,IN,21.115531,72.743251,Domestic Stronghold (IN)
+RML,Colombo Ratmalana International Airport,Colombo,LK,6.821638,79.885859,Domestic Stronghold (IN)
+IXA,Agartala - Maharaja Bir Bikram Airport,Agartala,IN,23.886999,91.240402,Domestic Stronghold (IN)
+IXB,Bagdogra Airport,Siliguri,IN,26.6812,88.328598,Domestic Stronghold (IN)
+VNS,Lal Bahadur Shastri International Airport,Varanasi,IN,25.452171,82.862549,Domestic Stronghold (IN)
+BBI,Biju Patnaik International Airport,Bhubaneswar,IN,20.251021,85.814747,Domestic Stronghold (IN)
+CCU,Netaji Subhash Chandra Bose International Airport,Kolkata,IN,22.654012,88.44765,Domestic Stronghold (IN)
+GAU,Lokpriya Gopinath Bordoloi International Airport,Guwahati,IN,26.106654,91.585226,Domestic Stronghold (IN)
+GAY,Gaya Airport,Gaya,IN,24.744301,84.951202,Domestic Stronghold (IN)
+IMF,Bir Tikendrajit International Airport,Imphal,IN,24.76,93.896698,Domestic Stronghold (IN)
+PAT,Jay Prakash Narayan Airport,Patna,IN,25.591299,85.087997,Domestic Stronghold (IN)
+IXR,Birsa Munda Airport,Ranchi,IN,23.314300537100003,85.3217010498,Domestic Stronghold (IN)
+VTZ,Visakhapatnam International Airport,Visakhapatnam,IN,17.723506,83.227729,Domestic Stronghold (IN)
+HKG,Hong Kong International Airport,Hong Kong,HK,22.31184,113.914862,Premium Global Hub
+ATQ,Sri Guru Ram Das Ji International Airport,Amritsar,IN,31.7096,74.797302,Domestic Stronghold (IN)
+IXC,Shaheed Bhagat Singh International Airport,Chandigarh,IN,30.6735,76.788498,Domestic Stronghold (IN)
+DED,Dehradun Jolly Grant Airport,Dehradun (Jauligrant),IN,30.189243,78.176651,Domestic Stronghold (IN)
+DEL,Indira Gandhi International Airport,New Delhi,IN,28.55563,77.09519,Domestic Stronghold (IN)
+HSS,Maharaja Agrasen International Airport,Hisar,IN,29.186065,75.74142,Domestic Stronghold (IN)
+HWR,Halwara International Airport,Halwara,IN,30.748501,75.629799,Domestic Stronghold (IN)
+JAI,Jaipur International Airport,Jaipur,IN,26.8242,75.812202,Domestic Stronghold (IN)
+LKO,Chaudhary Charan Singh International Airport,Lucknow,IN,26.760599,80.889297,Domestic Stronghold (IN)
+SXR,Sheikh ul Alam International Airport,Srinagar,IN,33.987099,74.7742,Domestic Stronghold (IN)
+LPQ,Luang Phabang International Airport,Luang Phabang,LA,19.904273,102.167191,Domestic Stronghold (IN)
+PKZ,Pakse International Airport,Pakse,LA,15.133973,105.779871,Domestic Stronghold (IN)
+BLR,Kempegowda International Airport Bengaluru,Bengaluru,IN,13.1979,77.706299,Domestic Stronghold (IN)
+VGA,Vijayawada International Airport,Vijayawada,IN,16.530011,80.804888,Domestic Stronghold (IN)
+CJB,Coimbatore International Airport,Coimbatore,IN,11.03,77.043404,Domestic Stronghold (IN)
+COK,Cochin International Airport,Kochi,IN,10.151047,76.400838,Domestic Stronghold (IN)
+CCJ,Calicut International Airport,Calicut,IN,11.135996,75.955152,Domestic Stronghold (IN)
+GOX,Manohar International Airport,Mopa,IN,15.744257,73.860625,Domestic Stronghold (IN)
+GOI,Goa Dabolim International Airport,Vasco da Gama,IN,15.380062,73.833328,Domestic Stronghold (IN)
+HYD,Rajiv Gandhi International Airport,Hyderabad,IN,17.231318,78.429855,Domestic Stronghold (IN)
+CNN,Kannur International Airport,Kannur,IN,11.916343,75.544979,Domestic Stronghold (IN)
+IXE,Mangaluru International Airport,Mangaluru,IN,12.95471,74.886812,Domestic Stronghold (IN)
+MAA,Chennai International Airport,Chennai,IN,12.990005,80.169296,Domestic Stronghold (IN)
+IXZ,Veer Savarkar International Airport / INS Utkrosh,Port Blair,IN,11.640194,92.72902,Domestic Stronghold (IN)
+TIR,Tirupati International Airport,Tirupati,IN,13.631988,79.539869,Domestic Stronghold (IN)
+TRZ,Tiruchirappalli International Airport,Tiruchirappalli,IN,10.762915,78.717741,Domestic Stronghold (IN)
+TRV,Thiruvananthapuram International Airport,Thiruvananthapuram,IN,8.481889,76.920029,Domestic Stronghold (IN)
+BKK,Suvarnabhumi Airport,Bangkok,TH,13.6811,100.747002,Premium Global Hub
+SIN,Singapore Changi Airport,Singapore,SG,1.35019,103.994003,Premium Global Hub
+MEL,Melbourne Airport,Melbourne,AU,-37.670732,144.837898,Premium Global Hub
+PER,Perth International Airport,Perth,AU,-31.94029998779297,115.96700286865234,Premium Global Hub
+SYD,Sydney Kingsford Smith International Airport,Sydney (Mascot),AU,-33.946098,151.177002,Premium Global Hub

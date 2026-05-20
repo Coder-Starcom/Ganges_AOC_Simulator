@@ -1,0 +1,21 @@
+{
+  "indian_airports": [
+    "AMD", "BOM", "BDQ", "BHO", "HSR", "IDR", "NAG", "ISK", "PNQ", "SAG",
+    "STV", "RML", "IXB", "VNS", "BBI", "CCU", "GAU", "IMF", "VTZ", "ATQ",
+    "IXC", "DEL", "HSS", "HWR", "JAI", "LKO", "SXR", "LPQ", "PKZ", "BLR",
+    "VGA", "CJB", "COK", "CCJ", "GOX", "GOI", "HYD", "CNN", "IXE", "MAA",
+    "IXZ", "TIR", "TRZ", "TRV", "PAT", "RPR", "GAY", "IXR", "DED", "IXA"
+  ],
+  "international_airports": [
+    "YVR", "YYC", "YUL", "YYZ", "TUN", "LOS", "BRU", "BER", "FRA", "HAM",
+    "DUS", "MUC", "HEL", "MAN", "LGW", "LHR", "STN", "AMS", "DUB", "CPH",
+    "OSL", "GDN", "KRK", "WAW", "ARN", "CPT", "JNB", "CAI", "NBO", "ATL",
+    "BOS", "ORD", "DFW", "DEN", "DTW", "IAH", "LAX", "MIA", "MSP", "JFK",
+    "LGA", "EWR", "MCO", "PHX", "SAN", "SFO", "SEA", "IAD", "BCN", "MAD",
+    "AGP", "LYS", "MRS", "NCE", "CDG", "ORY", "ATH", "BUD", "MXP", "FCO",
+    "PRG", "VIE", "LIS", "OPO", "GVA", "ZRH", "MEX", "CUN", "PTY", "KBL",
+    "BAH", "JED", "MED", "RUH", "AMM", "KWI", "BEY", "AUH", "DXB", "DWC",
+    "MCT", "KHI", "LHE", "ISB", "PEW", "DOH", "TPE", "NRT", "HND", "KIX",
+    "ICN", "GMP", "PUS", "MNL", "BKK", "HKG", "SIN", "MEL", "PER", "SYD"
+  ]
+}

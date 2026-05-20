@@ -1,0 +1,150 @@
+YUL,Montreal / Pierre Elliott Trudeau International Airport,Montréal,CA,45.467837,-73.742294,45000.0,65000.0,45,True
+YVR,Vancouver International Airport,Vancouver,CA,49.193901,-123.183998,45000.0,65000.0,45,True
+YYC,Calgary International Airport,Calgary,CA,51.118822,-114.009933,45000.0,65000.0,45,True
+YYZ,Toronto Pearson International Airport,Toronto,CA,43.675935,-79.629421,45000.0,65000.0,45,True
+LOS,Murtala Muhammed International Airport,Lagos,NG,6.57737,3.32116,45000.0,65000.0,45,True
+TUN,Tunis Carthage International Airport,Tunis,TN,36.851002,10.2272,45000.0,65000.0,45,True
+BRU,Brussels Airport,Zaventem,BE,50.901402,4.48444,45000.0,65000.0,45,True
+BER,Berlin Brandenburg Airport,Berlin,DE,52.361738,13.502341,45000.0,65000.0,45,True
+FRA,Frankfurt Main Airport,Frankfurt am Main,DE,50.026706,8.55835,45000.0,65000.0,45,True
+HAM,Hamburg Helmut Schmidt Airport,Hamburg,DE,53.630402,9.98823,45000.0,65000.0,45,True
+DUS,Düsseldorf Airport,Düsseldorf,DE,51.289501,6.76678,45000.0,65000.0,45,True
+MUC,Munich Airport,Munich,DE,48.353802,11.7861,45000.0,65000.0,45,True
+HEL,Helsinki Vantaa Airport,Helsinki (Vantaa),FI,60.318363,24.963341,45000.0,65000.0,45,True
+MAN,Manchester Airport,"Manchester, Greater Manchester",GB,53.349375,-2.279521,45000.0,65000.0,45,True
+LGW,London Gatwick Airport,London,GB,51.148744,-0.185739,45000.0,65000.0,45,True
+LHR,London Heathrow Airport,London,GB,51.470748,-0.459909,45000.0,65000.0,45,True
+STN,London Stansted Airport,"London, Essex",GB,51.884998,0.235,45000.0,65000.0,45,True
+AMS,Amsterdam Airport Schiphol,Amsterdam,NL,52.308601,4.76389,45000.0,65000.0,45,True
+DUB,Dublin Airport,Dublin,IE,53.428713,-6.262121,45000.0,65000.0,45,True
+CPH,Copenhagen Kastrup Airport,Copenhagen,DK,55.617900848389,12.656000137329,45000.0,65000.0,45,True
+OSL,Oslo-Gardermoen International Airport,Oslo (Gardermoen),NO,60.193901,11.1004,45000.0,65000.0,45,True
+GDN,Gdańsk Lech Wałęsa Airport,Gdańsk,PL,54.377602,18.4662,45000.0,65000.0,45,True
+KRK,Kraków John Paul II International Airport,Balice,PL,50.077702,19.7848,45000.0,65000.0,45,True
+WAW,Warsaw Chopin Airport,Warsaw,PL,52.165699,20.9671,45000.0,65000.0,45,True
+ARN,Stockholm-Arlanda Airport,Stockholm,SE,59.64849,17.928829,45000.0,65000.0,45,True
+CPT,Cape Town International Airport,Cape Town,ZA,-33.97403,18.604333,45000.0,65000.0,45,True
+JNB,O.R. Tambo International Airport,Johannesburg,ZA,-26.140081,28.246801,45000.0,65000.0,45,True
+CAI,Cairo International Airport,Cairo,EG,30.111534,31.396694,45000.0,65000.0,45,True
+NBO,Jomo Kenyatta International Airport,Nairobi,KE,-1.318886,36.928233,45000.0,65000.0,45,True
+ATL,Hartsfield Jackson Atlanta International Airport,Atlanta,US,33.6367,-84.428101,45000.0,65000.0,45,True
+BOS,Boston Logan International Airport,Boston,US,42.36197,-71.0079,45000.0,65000.0,45,True
+DEN,Denver International Airport,Denver,US,39.860027,-104.673792,45000.0,65000.0,45,True
+DFW,Dallas Fort Worth International Airport,Dallas-Fort Worth,US,32.896801,-97.038002,45000.0,65000.0,45,True
+DTW,Detroit Metropolitan Wayne County Airport,Detroit,US,42.21377,-83.353786,45000.0,65000.0,45,True
+EWR,Newark Liberty International Airport,Newark,US,40.6894,-74.170545,45000.0,65000.0,45,True
+IAD,Washington Dulles International Airport,Dulles,US,38.9445,-77.455803,45000.0,65000.0,45,True
+IAH,George Bush Intercontinental Airport,Houston,US,29.9844,-95.3414,45000.0,65000.0,45,True
+JFK,John F. Kennedy International Airport,New York,US,40.639447,-73.779317,45000.0,65000.0,45,True
+LAX,Los Angeles International Airport,Los Angeles,US,33.942501,-118.407997,45000.0,65000.0,45,True
+LGA,LaGuardia Airport,New York,US,40.777199,-73.872597,45000.0,65000.0,45,True
+MCO,Orlando International Airport,Orlando,US,28.429399490356445,-81.30899810791016,45000.0,65000.0,45,True
+MIA,Miami International Airport,Miami,US,25.796011,-80.289751,45000.0,65000.0,45,True
+MSP,Minneapolis–Saint Paul International Airport / Wold–Chamberlain Field,Minneapolis,US,44.880081,-93.221741,45000.0,65000.0,45,True
+ORD,Chicago O'Hare International Airport,Chicago,US,41.9786,-87.9048,45000.0,65000.0,45,True
+PHX,Phoenix Sky Harbor International Airport,Phoenix,US,33.435302,-112.005905,45000.0,65000.0,45,True
+SAN,San Diego International Airport,San Diego,US,32.733601,-117.190002,45000.0,65000.0,45,True
+SEA,Seattle–Tacoma International Airport,Seattle,US,47.447943,-122.310276,45000.0,65000.0,45,True
+SFO,San Francisco International Airport,San Francisco,US,37.619806,-122.374821,45000.0,65000.0,45,True
+BCN,Josep Tarradellas Barcelona-El Prat Airport,Barcelona,ES,41.2971,2.07846,45000.0,65000.0,45,True
+MAD,Adolfo Suárez Madrid–Barajas Airport,Madrid,ES,40.493407,-3.572249,45000.0,65000.0,45,True
+AGP,Málaga-Costa del Sol Airport,Málaga,ES,36.6749,-4.49911,45000.0,65000.0,45,True
+LYS,Lyon Saint-Exupéry Airport,"Colombier-Saugnieu, Rhône",FR,45.725996,5.090139,45000.0,65000.0,45,True
+MRS,Marseille Provence Airport,"Marignane, Bouches-du-Rhône",FR,43.438088,5.2125,45000.0,65000.0,45,True
+NCE,Nice-Côte d'Azur Airport,"Nice, Alpes-Maritimes",FR,43.658401,7.21587,45000.0,65000.0,45,True
+CDG,Charles de Gaulle International Airport,"Paris (Roissy-en-France, Val-d'Oise)",FR,49.00896,2.554117,45000.0,65000.0,45,True
+ORY,Paris-Orly Airport,"Paris (Orly, Val-de-Marne)",FR,48.729499,2.358963,45000.0,65000.0,45,True
+ATH,Athens Eleftherios Venizelos International Airport,Spata-Artemida,GR,37.936401,23.9445,45000.0,65000.0,45,True
+BUD,Budapest Liszt Ferenc International Airport,Budapest,HU,47.43018,19.262393,45000.0,65000.0,45,True
+MXP,Milan Malpensa International Airport,Ferno (VA),IT,45.6306,8.72811,45000.0,65000.0,45,True
+FCO,Rome–Fiumicino Leonardo da Vinci International Airport,Rome,IT,41.804532,12.251998,45000.0,65000.0,45,True
+PRG,Václav Havel Airport Prague,Prague,CZ,50.100874,14.259911,45000.0,65000.0,45,True
+VIE,Vienna International Airport,Vienna,AT,48.110298,16.5697,45000.0,65000.0,45,True
+OPO,Francisco de Sá Carneiro Airport,Porto,PT,41.2481002808,-8.68138980865,45000.0,65000.0,45,True
+LIS,Lisbon Humberto Delgado Airport,Lisbon,PT,38.7813,-9.13592,45000.0,65000.0,45,True
+GVA,Geneva International Airport,Geneva,CH,46.238098,6.10895,45000.0,65000.0,45,True
+ZRH,Zürich Airport,Zurich,CH,47.458056,8.548056,45000.0,65000.0,45,True
+MEX,Mexico City Benito Juárez International Airport,Mexico City,MX,19.435822,-99.07033,45000.0,65000.0,45,True
+CUN,Cancún International Airport,Cancún,MX,21.040817,-86.87347,45000.0,65000.0,45,True
+PTY,Tocumen International Airport,Tocumen,PA,9.07136,-79.383499,45000.0,65000.0,45,True
+KBL,Kabul International Airport,Kabul,AF,34.565899,69.212303,45000.0,65000.0,45,True
+BAH,Bahrain International Airport,Manama,BH,26.267295,50.63764,45000.0,65000.0,45,True
+JED,King Abdulaziz International Airport,Jeddah,SA,21.680241,39.157436,45000.0,65000.0,45,True
+MED,Prince Mohammad Bin Abdulaziz Airport,Medina,SA,24.5534,39.705101,45000.0,65000.0,45,True
+RUH,King Khalid International Airport,Riyadh,SA,24.9576,46.698799,45000.0,65000.0,45,True
+AMM,Queen Alia International Airport,Amman,JO,31.7226009369,35.9931983948,45000.0,65000.0,45,True
+KWI,Kuwait International Airport,Kuwait City,KW,29.224487,47.969813,45000.0,65000.0,45,True
+BEY,Beirut Rafic Hariri International Airport,Beirut,LB,33.819833,35.487443,45000.0,65000.0,45,True
+AUH,Zayed International Airport,Abu Dhabi,AE,24.440966,54.649237,45000.0,65000.0,45,True
+DXB,Dubai International Airport,Dubai,AE,25.24979,55.370992,45000.0,65000.0,45,True
+DWC,Al Maktoum International Airport,Dubai(Jebel Ali),AE,24.896171,55.16235,45000.0,65000.0,45,True
+MCT,Muscat International Airport,Muscat/Seeb,OM,23.600218,58.285268,45000.0,65000.0,45,True
+ISB,Islamabad International Airport,Attock,PK,33.549,72.82566,45000.0,65000.0,45,True
+KHI,Jinnah International Airport,Karachi,PK,24.9065,67.160797,45000.0,65000.0,45,True
+LHE,Allama Iqbal International Airport,Lahore,PK,31.521601,74.403603,45000.0,65000.0,45,True
+PEW,Bacha Khan International Airport,Peshawar,PK,33.9939,71.514603,45000.0,65000.0,45,True
+DOH,Hamad International Airport,Doha,QA,25.273056,51.608056,45000.0,65000.0,45,True
+TPE,Taiwan Taoyuan International Airport,Taoyuan,TW,25.0777,121.233002,45000.0,65000.0,45,True
+NRT,Narita International Airport,Narita,JP,35.76858,140.388714,45000.0,65000.0,45,True
+KIX,Kansai International Airport,Osaka,JP,34.427299,135.244003,45000.0,65000.0,45,True
+HND,Tokyo Haneda International Airport,Tokyo,JP,35.549678,139.786958,45000.0,65000.0,45,True
+PUS,Gimhae International Airport,Busan,KR,35.179501,128.938004,45000.0,65000.0,45,True
+ICN,Incheon International Airport,Seoul,KR,37.469101,126.450996,45000.0,65000.0,45,True
+GMP,Gimpo International Airport,Seoul,KR,37.5583,126.791,45000.0,65000.0,45,True
+MNL,Ninoy Aquino International Airport,Manila (Pasay),PH,14.5086,121.019997,45000.0,65000.0,45,True
+AMD,Sardar Vallabh Patel International Airport,Ahmedabad,IN,23.0772,72.634697,45000.0,65000.0,45,True
+BOM,Chhatrapati Shivaji Maharaj International Airport,Mumbai,IN,19.088699,72.867897,45000.0,65000.0,45,True
+BDQ,Vadodara International Airport,Vadodara,IN,22.336201,73.226303,45000.0,65000.0,45,True
+BHO,Raja Bhoj International Airport,Bhopal,IN,23.2875,77.337402,45000.0,65000.0,45,True
+HSR,Rajkot International Airport,Rajkot,IN,22.378824,71.039391,45000.0,65000.0,45,True
+IDR,Devi Ahilya Bai Holkar International Airport,Indore,IN,22.721404,75.80051,45000.0,65000.0,45,True
+NAG,Dr. Babasaheb Ambedkar International Airport,Nagpur,IN,21.092199,79.047203,45000.0,65000.0,45,True
+ISK,Nashik International Airport,Nashik,IN,20.119101,73.912903,45000.0,65000.0,45,True
+PNQ,Pune International Airport,Pune,IN,18.5821,73.919701,45000.0,65000.0,45,True
+RPR,Swami Vivekananda Airport,Raipur,IN,21.180401,81.7388,45000.0,65000.0,45,True
+SAG,Shirdi International Airport,Kakadi,IN,19.689211,74.373655,45000.0,65000.0,45,True
+STV,Surat International Airport,Surat,IN,21.115531,72.743251,45000.0,65000.0,45,True
+RML,Colombo Ratmalana International Airport,Colombo,LK,6.821638,79.885859,45000.0,65000.0,45,True
+IXA,Agartala - Maharaja Bir Bikram Airport,Agartala,IN,23.886999,91.240402,45000.0,65000.0,45,True
+IXB,Bagdogra Airport,Siliguri,IN,26.6812,88.328598,45000.0,65000.0,45,True
+VNS,Lal Bahadur Shastri International Airport,Varanasi,IN,25.452171,82.862549,45000.0,65000.0,45,True
+BBI,Biju Patnaik International Airport,Bhubaneswar,IN,20.251021,85.814747,45000.0,65000.0,45,True
+CCU,Netaji Subhash Chandra Bose International Airport,Kolkata,IN,22.654012,88.44765,45000.0,65000.0,45,True
+GAU,Lokpriya Gopinath Bordoloi International Airport,Guwahati,IN,26.106654,91.585226,45000.0,65000.0,45,True
+GAY,Gaya Airport,Gaya,IN,24.744301,84.951202,45000.0,65000.0,45,True
+IMF,Bir Tikendrajit International Airport,Imphal,IN,24.76,93.896698,45000.0,65000.0,45,True
+PAT,Jay Prakash Narayan Airport,Patna,IN,25.591299,85.087997,45000.0,65000.0,45,True
+IXR,Birsa Munda Airport,Ranchi,IN,23.314300537100003,85.3217010498,45000.0,65000.0,45,True
+VTZ,Visakhapatnam International Airport,Visakhapatnam,IN,17.723506,83.227729,45000.0,65000.0,45,True
+HKG,Hong Kong International Airport,Hong Kong,HK,22.31184,113.914862,45000.0,65000.0,45,True
+ATQ,Sri Guru Ram Das Ji International Airport,Amritsar,IN,31.7096,74.797302,45000.0,65000.0,45,True
+IXC,Shaheed Bhagat Singh International Airport,Chandigarh,IN,30.6735,76.788498,45000.0,65000.0,45,True
+DED,Dehradun Jolly Grant Airport,Dehradun (Jauligrant),IN,30.189243,78.176651,45000.0,65000.0,45,True
+DEL,Indira Gandhi International Airport,New Delhi,IN,28.55563,77.09519,45000.0,65000.0,45,True
+HSS,Maharaja Agrasen International Airport,Hisar,IN,29.186065,75.74142,45000.0,65000.0,45,True
+HWR,Halwara International Airport,Halwara,IN,30.748501,75.629799,45000.0,65000.0,45,True
+JAI,Jaipur International Airport,Jaipur,IN,26.8242,75.812202,45000.0,65000.0,45,True
+LKO,Chaudhary Charan Singh International Airport,Lucknow,IN,26.760599,80.889297,45000.0,65000.0,45,True
+SXR,Sheikh ul Alam International Airport,Srinagar,IN,33.987099,74.7742,45000.0,65000.0,45,True
+LPQ,Luang Phabang International Airport,Luang Phabang,LA,19.904273,102.167191,45000.0,65000.0,45,True
+PKZ,Pakse International Airport,Pakse,LA,15.133973,105.779871,45000.0,65000.0,45,True
+BLR,Kempegowda International Airport Bengaluru,Bengaluru,IN,13.1979,77.706299,45000.0,65000.0,45,True
+VGA,Vijayawada International Airport,Vijayawada,IN,16.530011,80.804888,45000.0,65000.0,45,True
+CJB,Coimbatore International Airport,Coimbatore,IN,11.03,77.043404,45000.0,65000.0,45,True
+COK,Cochin International Airport,Kochi,IN,10.151047,76.400838,45000.0,65000.0,45,True
+CCJ,Calicut International Airport,Calicut,IN,11.135996,75.955152,45000.0,65000.0,45,True
+GOX,Manohar International Airport,Mopa,IN,15.744257,73.860625,45000.0,65000.0,45,True
+GOI,Goa Dabolim International Airport,Vasco da Gama,IN,15.380062,73.833328,45000.0,65000.0,45,True
+HYD,Rajiv Gandhi International Airport,Hyderabad,IN,17.231318,78.429855,45000.0,65000.0,45,True
+CNN,Kannur International Airport,Kannur,IN,11.916343,75.544979,45000.0,65000.0,45,True
+IXE,Mangaluru International Airport,Mangaluru,IN,12.95471,74.886812,45000.0,65000.0,45,True
+MAA,Chennai International Airport,Chennai,IN,12.990005,80.169296,45000.0,65000.0,45,True
+IXZ,Veer Savarkar International Airport / INS Utkrosh,Port Blair,IN,11.640194,92.72902,45000.0,65000.0,45,True
+TIR,Tirupati International Airport,Tirupati,IN,13.631988,79.539869,45000.0,65000.0,45,True
+TRZ,Tiruchirappalli International Airport,Tiruchirappalli,IN,10.762915,78.717741,45000.0,65000.0,45,True
+TRV,Thiruvananthapuram International Airport,Thiruvananthapuram,IN,8.481889,76.920029,45000.0,65000.0,45,True
+BKK,Suvarnabhumi Airport,Bangkok,TH,13.6811,100.747002,45000.0,65000.0,45,True
+SIN,Singapore Changi Airport,Singapore,SG,1.35019,103.994003,45000.0,65000.0,45,True
+MEL,Melbourne Airport,Melbourne,AU,-37.670732,144.837898,45000.0,65000.0,45,True
+PER,Perth International Airport,Perth,AU,-31.94029998779297,115.96700286865234,45000.0,65000.0,45,True
+SYD,Sydney Kingsford Smith International Airport,Sydney (Mascot),AU,-33.946098,151.177002,45000.0,65000.0,45,True

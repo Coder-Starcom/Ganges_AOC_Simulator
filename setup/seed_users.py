@@ -2,22 +2,28 @@ import os
 import psycopg2
 from psycopg2.extras import execute_values
 
-# --- 1. CONFIGURATION AND CLOUD CONNECTION ---
-NEON_DB_URI = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:admin123@ep-ganges-aviation-pool.east-us-2.aws.neon.tech/gi_aviation_db?sslmode=require"
-)
+# Strict Production Boundary: Pull target cloud environment string dynamically.
+# Hardcoded fallbacks stripped to prevent credential leaks on public VCS commits.
+NEON_DB_URI = os.getenv("DATABASE_URL")
+
+if not NEON_DB_URI:
+    raise EnvironmentError(
+        "❌ CRITICAL CONFIGURATION FAULT: The 'DATABASE_URL' environment variable is unassigned. "
+        "User seeding initialization aborted to safeguard credentials."
+    )
+
 
 def seed_synthetic_profiles():
     print("🚀 Initializing Ganges International Synthetic Passenger Provisioning Engine...")
     
     # 2. DEFINING EXPERIMENTAL SIMULATION ACCOUNTS
-    # Maps perfectly to the zero-auth login profiles hardcoded on your dashboard UI matrix
+    # Maps perfectly to the zero-auth login profiles hardcoded on your dashboard UI matrix.
+    # Note: Explicitly matched schema constraint definitions ('INSTITUTIONAL_WHOLESALE')
     profiles = [
         ("usr_einstein_001", "usr_einstein_001", "Albert Einstein", "QUANT_STRESS_BOT"),
-        ("usr_curie_002", "usr_curie_002", "Marie Curie", "INSTITUTIONAL_WHOSALE"),
+        ("usr_curie_002", "usr_curie_002", "Marie Curie", "INSTITUTIONAL_WHOLESALE"),
         ("usr_tesla_003", "usr_tesla_003", "Nikola Tesla", "QUANT_STRESS_BOT"),
-        ("usr_turing_004", "usr_turing_004", "Alan Turing", "INSTITUTIONAL_WHOSALE")
+        ("usr_turing_004", "usr_turing_004", "Alan Turing", "INSTITUTIONAL_WHOLESALE")
     ]
     
     print(f"📥 Connecting to NeonDB cluster to clear and provision {len(profiles)} master profiles...")
@@ -26,7 +32,8 @@ def seed_synthetic_profiles():
         cursor = connection.cursor()
         
         # Safe merge strategy: clear out matching usernames if they exist to avoid unique constraint traps
-        cursor.execute("DELETE FROM users WHERE user_id IN %s;", (tuple(p[0] for p in profiles),))
+        user_ids_tuple = tuple(p[0] for p in profiles)
+        cursor.execute("DELETE FROM users WHERE user_id IN %s;", (user_ids_tuple,))
         
         # Batch insert using optimized execute_values
         insert_query = """
@@ -46,7 +53,7 @@ def seed_synthetic_profiles():
         print("=============================")
         
     except Exception as error:
-        print(f"❌ PROFILE DEPLOYMENT FAULT: {error}")
+        print(f"❌ PROFILE DEPLOYMENT FAULT: Operation rolled back. Details:\n{error}")
         if 'connection' in locals():
             connection.rollback()
     finally:
@@ -54,7 +61,8 @@ def seed_synthetic_profiles():
             cursor.close()
         if 'connection' in locals():
             connection.close()
-        print("\n🔌 Connection isolated back to pool cluster.")
+        print("🔌 Connection isolated back to pool cluster.")
+
 
 if __name__ == "__main__":
     seed_synthetic_profiles()

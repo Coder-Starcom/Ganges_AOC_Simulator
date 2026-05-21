@@ -4,10 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DB_URI = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:admin123@ep-ganges-aviation-pool.east-us-2.aws.neon.tech/gi_aviation_db?sslmode=require"
-)
+DB_URI = os.getenv("DATABASE_URL")
 
 if not DB_URI:
     raise RuntimeError("DATABASE_URL environment variable is missing.")

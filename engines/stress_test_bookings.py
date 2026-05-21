@@ -5,17 +5,24 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# --- 1. CONFIGURATION AND CLOUD CONNECTION ---
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:admin123@ep-ganges-aviation-pool.east-us-2.aws.neon.tech/gi_aviation_db?sslmode=require"
-)
+# Import your newly rewritten, math-aligned pathfinder pricing logic
+from pathfinder import compute_edge_weights
+
+# Strict Production Boundary: Pull target cloud environment string dynamically.
+# Hardcoded fallbacks stripped to prevent credential leaks on public VCS commits.
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise EnvironmentError(
+        "❌ CRITICAL CONFIGURATION FAULT: The 'DATABASE_URL' environment variable is unassigned. "
+        "Stress simulator initialization aborted to safeguard credentials."
+    )
 
 # Simulation parameters: 40 simultaneous users attempting to book seats on the same flight block
-TARGET_FLIGHT_ID = 309  # Flight 309 from your pathfinder run (YYC -> MSP)
+TARGET_FLIGHT_ID = 309  
 TOTAL_STRESS_BOTS = 40
 
-# Master list of synthetic user IDs created by your provisioning script
+# Master list of synthetic user IDs matching the verified clean seed matrix
 SIMULATION_USERS = [
     "usr_einstein_001", 
     "usr_curie_002", 
@@ -27,7 +34,7 @@ SIMULATION_USERS = [
 def execute_atomic_booking(worker_id, user_id, flight_id):
     """
     Executes an isolated transaction block using SELECT FOR UPDATE 
-    to guarantee data safety during high concurrency.
+    to guarantee data safety during high-concurrency seat reservation bursts.
     """
     connection = None
     try:
@@ -35,11 +42,19 @@ def execute_atomic_booking(worker_id, user_id, flight_id):
         cursor = connection.cursor(cursor_factory=RealDictCursor)
         
         # --- PHASE A: ACQUIRE ROW-LEVEL LOCK ---
-        # FOR UPDATE tells PostgreSQL to block any other thread trying to modify this specific flight row
+        # FOR UPDATE forces incoming threads to block cleanly until previous locks commit or abort.
+        # Pulls complete data required by compute_edge_weights matrix to compute real pricing.
         lock_query = """
-            SELECT current_seat_liquidity, total_seat_capacity 
+            SELECT 
+                f.flight_id, f.route_id, f.aircraft_id, f.departure_timestamp, f.arrival_timestamp, f.current_seat_liquidity,
+                r.source_airport, r.target_airport, r.distance_km,
+                a.total_seat_capacity, a.fuel_burn_liters_per_km, a.hourly_crew_cost_inr, a.hourly_maint_cost_inr,
+                port_src.landing_fee_inr, port_tgt.turnaround_fee_inr, port_tgt.base_ground_turnaround_minutes
             FROM flight_instances f
+            JOIN routes r ON f.route_id = r.route_id
             JOIN aircraft_fleet a ON f.aircraft_id = a.aircraft_id
+            JOIN airports port_src ON r.source_airport = port_src.airport_code
+            JOIN airports port_tgt ON r.target_airport = port_tgt.airport_code
             WHERE f.flight_id = %s 
             FOR UPDATE;
         """
@@ -53,11 +68,16 @@ def execute_atomic_booking(worker_id, user_id, flight_id):
         total_capacity = flight_row['total_seat_capacity']
         
         # --- PHASE B: SEAT LIQUIDITY VALIDATION ---
+        # Handled by database check constraints, but caught here early to skip redundant execution
         if current_seats <= 0:
-            # Transaction safely rolled back automatically upon closing if no commit occurs
             return {"worker_id": worker_id, "status": "DENIED", "reason": "Flight completely full! Seat liquidity = 0"}
             
-        # --- PHASE C: WRITE LEDGERS ---
+        # --- PHASE C: ECONOMETRIC PRICING EVALUATION ---
+        # Dynamically invokes Section 2.2 formula from cost_calculation.md using exact live inventory counts
+        edge_metrics = compute_edge_weights(flight_row, fuel_multiplier=1.00)
+        calculated_fare = edge_metrics["cheapest_w"]
+        
+        # --- PHASE D: WRITE LEDGERS ---
         # 1. Create a parent booking record
         insert_booking = """
             INSERT INTO bookings (user_id, simulated_fuel_price_multiplier)
@@ -66,20 +86,18 @@ def execute_atomic_booking(worker_id, user_id, flight_id):
         cursor.execute(insert_booking, (user_id,))
         booking_id = cursor.fetchone()['booking_id']
         
-        # 2. Calculate seat layout number assignment (e.g., "Seat 14A")
+        # 2. Calculate seat layout layout index (e.g., "Seat 14A")
         allocated_seat_no = total_capacity - current_seats + 1
         seat_string = f"{allocated_seat_no}{random.choice(['A', 'B', 'C', 'D', 'E', 'F'])}"
         
-        # 3. Insert the physical ticket
-        # Simulating a dynamic fare yield placeholder value for the stress test transaction
-        simulated_fare = 5498.32 
+        # 3. Insert the physical ticket mapping to the exact calculated fare pricing ceiling
         insert_ticket = """
             INSERT INTO tickets (booking_id, flight_id, seat_number, fare_paid_inr, class_tier)
             VALUES (%s, %s, %s, %s, 'Economy');
         """
-        cursor.execute(insert_ticket, (booking_id, flight_id, seat_string, simulated_fare))
+        cursor.execute(insert_ticket, (booking_id, flight_id, seat_string, calculated_fare))
         
-        # 4. Atomically decrement seat pool inventory
+        # 4. Atomically decrement seat pool inventory (Raises check_seat_leakage constraint exception if less than 0)
         update_flight = """
             UPDATE flight_instances 
             SET current_seat_liquidity = current_seat_liquidity - 1 
@@ -87,9 +105,9 @@ def execute_atomic_booking(worker_id, user_id, flight_id):
         """
         cursor.execute(update_flight, (flight_id,))
         
-        # --- PHASE D: COMMIT TRANSACTION ---
+        # --- PHASE E: COMMIT TRANSACTION ---
         connection.commit()
-        return {"worker_id": worker_id, "status": "SUCCESS", "seat": seat_string, "booking_id": booking_id}
+        return {"worker_id": worker_id, "status": "SUCCESS", "seat": seat_string, "booking_id": booking_id, "fare": calculated_fare}
         
     except Exception as e:
         if connection:
@@ -110,7 +128,6 @@ def run_booking_stress_test():
     start_time = time.time()
     results = []
     
-    # Fire off ThreadPoolExecutor to force simultaneous thread execution blocks
     with ThreadPoolExecutor(max_workers=TOTAL_STRESS_BOTS) as executor:
         futures = []
         for i in range(1, TOTAL_STRESS_BOTS + 1):
@@ -139,15 +156,13 @@ def run_booking_stress_test():
     print("="*80)
     
     print("\n📋 LIVE TRANSACTION LOG EXTRACT:")
-    for res in sorted(results, key=lambda x: x['worker_id'])[:15]: # Show first 15 logs
+    for res in sorted(results, key=lambda x: x['worker_id'])[:15]:
         if res['status'] == "SUCCESS":
-            print(f" 🟢 Bot {res['worker_id']:02d}: RESERVATION MADE successfully! Seat: {res['seat']} | Booking ID: {res['booking_id']}")
+            print(f" 🟢 Bot {res['worker_id']:02d}: RESERVATION MADE! Seat: {res['seat']} | Fare Paid: ₹{res['fare']:,} | Booking ID: {res['booking_id']}")
         elif res['status'] == "DENIED":
             print(f" 🟡 Bot {res['worker_id']:02d}: TRANSACTION DENIED ➔ {res['reason']}")
         else:
             print(f" 🔴 Bot {res['worker_id']:02d}: FAULT CRASHED ➔ {res['reason']}")
             
-    print("\n💡 Tip: Run 'python .\\setup\\read_db.py' to observe seat reduction and new ledger lines!")
-
 if __name__ == "__main__":
     run_booking_stress_test()

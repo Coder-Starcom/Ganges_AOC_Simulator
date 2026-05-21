@@ -3,29 +3,41 @@ import sys
 import time
 import random
 import psycopg2
+from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Maintain relative module paths for importing your core engines
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from pathfinder import NEON_DB_URI
+# Strict Production Boundary: Enforce check on system variable to catch credential bugs early
+NEON_DB_URI = os.getenv("DATABASE_URL")
+if not NEON_DB_URI:
+    raise EnvironmentError(
+        "❌ CRITICAL CONFIGURATION FAULT: The 'DATABASE_URL' environment variable is unassigned. "
+        "Concurrency simulator aborted to prevent runtime connection failure."
+    )
+
 from stress_test_bookings import execute_atomic_booking, SIMULATION_USERS
 
 def fetch_valid_flights():
-    """Quick helper to poll available flight inventory."""
+    """Quick helper to poll available flight inventory dynamically using the current timestamp."""
     try:
         conn = psycopg2.connect(NEON_DB_URI)
         cursor = conn.cursor()
+        
+        # Modernized: Dynamic UTC time-bounding prevents code decay over calendar shifts
+        now_utc_str = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+        
         # Focuses the parallel transaction threads on the next 200 closest departures
         query = """
             SELECT flight_id 
             FROM flight_instances 
             WHERE current_seat_liquidity > 0 
-            AND departure_timestamp >= '2026-05-20 17:15:00'
+            AND departure_timestamp >= %s
             ORDER BY departure_timestamp ASC 
             LIMIT 200;
         """
-        cursor.execute(query)
+        cursor.execute(query, (now_utc_str,))
         flights = [row[0] for row in cursor.fetchall()]
         cursor.close()
         conn.close()
@@ -35,7 +47,7 @@ def fetch_valid_flights():
         return []
 
 def fire_single_transaction(worker_id, flight_pool):
-    """Worker task executed inside the parallel thread pool."""
+    """Worker task executed inside the parallel thread pool with explicit constraint handling."""
     if not flight_pool:
         return "EMPTY_POOL"
     target_flight_id = random.choice(flight_pool)
@@ -44,6 +56,11 @@ def fire_single_transaction(worker_id, flight_pool):
     try:
         result = execute_atomic_booking(worker_id=worker_id, user_id=random_passenger, flight_id=target_flight_id)
         return result.get('status', 'ERROR')
+    except psycopg2.errors.CheckViolation as cv_err:
+        # Gracefully handle the database protecting itself against negative seat liquidity
+        if "check_seat_leakage" in str(cv_err):
+            return "SOLD_OUT"
+        return "CONSTRAINT_VIOLATION"
     except Exception:
         return 'EXCEPTION'
 
@@ -54,9 +71,6 @@ def run_overclocked_simulator():
     print("🛑 Press CTRL+C at any time to abort.")
     print("=" * 60)
     
-    # ---------------------------------------------------------
-    # STEP 1: PARALLEL HYPER-BLAST MODE (Fires hundreds of rows instantly)
-    # ---------------------------------------------------------
     TOTAL_BLAST_BOOKINGS = 2500   # Total tickets to write in the burst
     CONCURRENT_THREADS = 150      # How many parallel actions to run at the exact same millisecond
     
@@ -66,7 +80,7 @@ def run_overclocked_simulator():
     while blast_successful < TOTAL_BLAST_BOOKINGS:
         flights = fetch_valid_flights()
         if not flights:
-            print("💤 No seat liquidity available. Pausing blast.")
+            print("💤 No seat liquidity available in network. Pausing blast.")
             break
             
         remaining_needed = TOTAL_BLAST_BOOKINGS - blast_successful
@@ -82,9 +96,12 @@ def run_overclocked_simulator():
             ]
             
             for future in as_completed(futures):
-                status = future.result()
-                if status == "SUCCESS":
-                    blast_successful += 1
+                try:
+                    status = future.result()
+                    if status == "SUCCESS":
+                        blast_successful += 1
+                except Exception:
+                    continue  # Protect the main loop context from thread pool bubbles
         
         print(f"📈 Real-time Burst Progress: {blast_successful}/{TOTAL_BLAST_BOOKINGS} tickets written to database ledger.")
         batch_run += 1
@@ -110,8 +127,12 @@ def run_overclocked_simulator():
         except KeyboardInterrupt:
             print("\n🛑 Shutting down demand simulator gracefully.")
             break
-        except Exception:
+        except Exception as e:
+            print(f"⚠️ Cruise warning encountered: {e}. Retrying in 4s...")
             time.sleep(4.0)
 
 if __name__ == "__main__":
-    run_overclocked_simulator()
+    try:
+        run_overclocked_simulator()
+    except KeyboardInterrupt:
+        print("\n🛑 Execution terminated via terminal signal interrupt.")

@@ -4,7 +4,7 @@ A high-concurrency, data-driven Enterprise Airline Operations Center simulation 
 
 ### 🌐 Live Production Application
 
-👉 [**(https://ganges-aoc-simulator.streamlit.app/)**](https://ganges-aoc-simulator.streamlit.app/)
+👉 **[INSERT YOUR STREAMLIT COMMUNITY CLOUD URL HERE]**
 
 ---
 

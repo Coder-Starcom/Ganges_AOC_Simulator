@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Strict Production Boundary Imports
 from engines.pathfinder import NEON_DB_URI, compute_edge_weights
-from engines.topology import calculate_network_topology_metrics
+from engines.topology import analyze_network_topology
 
 # --- 1. INDUSTRIAL STYLING CONFIGURATION ---
 st.set_page_config(
@@ -127,5 +127,5 @@ with t4:
         airport_df=airport_df,
         fuel_shock=fuel_shock,
         compute_edge_weights=compute_edge_weights,
-        calculate_network_topology_metrics=calculate_network_topology_metrics
+        analyze_network_topology=analyze_network_topology
     )

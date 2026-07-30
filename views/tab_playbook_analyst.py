@@ -6,7 +6,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime, timedelta, timezone
 
-def render(neon_db_uri, active_airports, airport_df, fuel_shock, compute_edge_weights):
+def render(neon_db_uri, active_airports, airport_df, fuel_shock, compute_edge_weights, analyze_network_topology):
     st.markdown("### 🎯 Multi-Objective Network Arc Strategy Sandbox")
     st.markdown("""
         <div class="tooltip-box">

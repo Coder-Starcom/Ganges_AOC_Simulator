@@ -7,57 +7,77 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+import time
+
 def _execute_atomic_booking_worker(neon_db_uri, worker_id, user_id, flight_id):
     """
-    Thread-safe database worker executing a secure, row-locked transactional booking ticket assignment.
-    Utilizes SELECT FOR UPDATE to prevent inventory depletion race conditions.
+    Thread-safe database worker executing a row-locked transactional booking assignment.
+    Uses lock timeouts and backoff retries to prevent deadlock crashes under high concurrency.
     """
-    try:
-        conn = psycopg2.connect(neon_db_uri)
-        # Force autocommit off to guarantee explicit transaction block isolation control
-        conn.autocommit = False
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
-        # Lock and read row-level seat liquidity state bounds instantly
-        cursor.execute("""
-            SELECT current_seat_liquidity, total_seat_capacity 
-            FROM flight_instances 
-            WHERE flight_id = %s 
-            FOR UPDATE;
-        """, (flight_id,))
-        flight = cursor.fetchone()
-        
-        if not flight:
-            conn.rollback()
-            cursor.close()
-            conn.close()
-            return {"worker_id": worker_id, "user_id": user_id, "status": "DENIED", "message": "Flight node not found."}
+    max_retries = 3
+    
+    for attempt in range(max_retries):
+        conn = None
+        try:
+            conn = psycopg2.connect(neon_db_uri, connect_timeout=5)
+            conn.autocommit = False
+            cursor = conn.cursor(cursor_factory=RealDictCursor)
             
-        current_liquidity = flight['current_seat_liquidity']
-        
-        if current_liquidity > 0:
-            # Atomic inventory degradation
+            # Set a 2-second lock timeout so workers don't hang indefinitely waiting on row locks
+            cursor.execute("SET statement_timeout = 3000;")
+            cursor.execute("SET lock_timeout = 2000;")
+            
+            # Row lock for seat liquidity check
             cursor.execute("""
-                UPDATE flight_instances 
-                SET current_seat_liquidity = current_seat_liquidity - 1 
-                WHERE flight_id = %s;
+                SELECT current_seat_liquidity, total_seat_capacity 
+                FROM flight_instances 
+                WHERE flight_id = %s 
+                FOR UPDATE;
             """, (flight_id,))
             
-            # Commit the record cleanly down the ledger pipeline
-            conn.commit()
-            status = "SUCCESS"
-            msg = f"Seat locked cleanly. Staged inventory reduced to {current_liquidity - 1} slots."
-        else:
-            conn.rollback()
-            status = "DENIED"
-            msg = "Inventory exhausted. Seat race condition deflected successfully."
+            flight = cursor.fetchone()
             
-        cursor.close()
-        conn.close()
-        return {"worker_id": worker_id, "user_id": user_id, "status": status, "message": msg}
-        
-    except Exception as e:
-        return {"worker_id": worker_id, "user_id": user_id, "status": "ERROR", "message": str(e)}
+            if not flight:
+                conn.rollback()
+                cursor.close()
+                conn.close()
+                return {"worker_id": worker_id, "user_id": user_id, "status": "DENIED", "message": "Flight node not found."}
+                
+            current_liquidity = flight['current_seat_liquidity']
+            
+            if current_liquidity > 0:
+                cursor.execute("""
+                    UPDATE flight_instances 
+                    SET current_seat_liquidity = current_seat_liquidity - 1 
+                    WHERE flight_id = %s;
+                """, (flight_id,))
+                
+                conn.commit()
+                status = "SUCCESS"
+                msg = f"Seat locked cleanly. Staged inventory reduced to {current_liquidity - 1} slots."
+            else:
+                conn.rollback()
+                status = "DENIED"
+                msg = "Inventory exhausted. Seat race condition deflected successfully."
+                
+            cursor.close()
+            conn.close()
+            return {"worker_id": worker_id, "user_id": user_id, "status": status, "message": msg}
+            
+        except Exception as e:
+            if conn:
+                try:
+                    conn.rollback()
+                    conn.close()
+                except Exception:
+                    pass
+            
+            # Retry on connection or lock timeouts before failing
+            if attempt < max_retries - 1:
+                time.sleep(0.05 * (2 ** attempt)) # Exponential backoff
+                continue
+            
+            return {"worker_id": worker_id, "user_id": user_id, "status": "ERROR", "message": str(e)}
 
 
 def render(neon_db_uri, active_airports, simulated_otp):
